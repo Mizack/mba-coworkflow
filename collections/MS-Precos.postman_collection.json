@@ -1,0 +1,78 @@
+{
+  "info": {
+    "name": "MS-Precos",
+    "description": "Collection para microsserviço de preços",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Calcular Preço - Plano Basic",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"space_id\": 1,\n  \"start_time\": \"2024-01-15T09:00:00\",\n  \"end_time\": \"2024-01-15T11:00:00\",\n  \"user_plan\": \"basic\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/pricing/calc",
+          "host": ["{{base_url}}"],
+          "path": ["pricing", "calc"]
+        }
+      }
+    },
+    {
+      "name": "Calcular Preço - Plano Premium",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"space_id\": 1,\n  \"start_time\": \"2024-01-15T09:00:00\",\n  \"end_time\": \"2024-01-15T13:00:00\",\n  \"user_plan\": \"premium\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/pricing/calc",
+          "host": ["{{base_url}}"],
+          "path": ["pricing", "calc"]
+        }
+      }
+    },
+    {
+      "name": "Calcular Preço - Plano Enterprise",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"space_id\": 1,\n  \"start_time\": \"2024-01-15T08:00:00\",\n  \"end_time\": \"2024-01-15T17:00:00\",\n  \"user_plan\": \"enterprise\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/pricing/calc",
+          "host": ["{{base_url}}"],
+          "path": ["pricing", "calc"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5005"
+    }
+  ]
+}

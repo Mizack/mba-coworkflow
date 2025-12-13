@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Gerenciar Reservas</h2>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuário</th>
+                    <th>Espaço</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th>Status</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.user_id }}</td>
+                    <td>{{ reservation.space_id }}</td>
+                    <td>{{ reservation.start_time }}</td>
+                    <td>{{ reservation.end_time }}</td>
+                    <td><span class="badge bg-{% if reservation.status == 'active' %}success{% else %}secondary{% endif %}">{{ reservation.status }}</span></td>
+                    <td>R$ {{ reservation.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a href="/admin" class="btn btn-secondary mt-3">Voltar ao Painel</a>
+{% endblock %}

@@ -1,0 +1,37 @@
+{
+  "info": {
+    "name": "MS-Financeiro",
+    "description": "Collection para microsserviço financeiro",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Relatório de Receita",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/financial/revenue",
+          "host": ["{{base_url}}"],
+          "path": ["financial", "revenue"]
+        }
+      }
+    },
+    {
+      "name": "Relatório de Despesas",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/financial/expenses",
+          "host": ["{{base_url}}"],
+          "path": ["financial", "expenses"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5008"
+    }
+  ]
+}

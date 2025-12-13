@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Painel Administrativo</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5>Usuários Totais</h5>
+                <h3>{{ analytics.total_users }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5>Reservas Ativas</h5>
+                <h3>{{ analytics.active_reservations }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5>Taxa de Ocupação</h5>
+                <h3>{{ analytics.occupancy_rate }}%</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5>Receita Mensal</h5>
+                <h3>R$ {{ revenue.monthly_revenue }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Ações Administrativas</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Gerenciar Espaços</h5>
+                                <p>Criar, editar e remover espaços</p>
+                                <a href="/spaces/create" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Gerenciar Usuários</h5>
+                                <p>Visualizar e gerenciar usuários</p>
+                                <a href="/admin/users" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Gerenciar Reservas</h5>
+                                <p>Visualizar todas as reservas</p>
+                                <a href="/admin/reservations" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Relatórios Financeiros</h5>
+                                <p>Receitas e despesas</p>
+                                <a href="/financial" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Analytics</h5>
+                                <p>Métricas e estatísticas</p>
+                                <a href="/dashboard" class="btn btn-primary">Acessar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Notificações</h5>
+                                <p>Enviar notificações</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notifyModal">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Espaços Cadastrados</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Capacidade</th>
+                            <th>Preço/Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for space in spaces %}
+                        <tr>
+                            <td>{{ space.id }}</td>
+                            <td>{{ space.name }}</td>
+                            <td>{{ space.capacity }}</td>
+                            <td>R$ {{ space.price_per_hour }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="notifyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enviar Notificação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/admin/notify">
+                    <div class="mb-3">
+                        <label class="form-label">Tipo</label>
+                        <select name="type" class="form-control">
+                            <option value="email">Email</option>
+                            <option value="sms">SMS</option>
+                            <option value="push">Push</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Destinatário</label>
+                        <input type="text" name="to" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mensagem</label>
+                        <textarea name="message" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

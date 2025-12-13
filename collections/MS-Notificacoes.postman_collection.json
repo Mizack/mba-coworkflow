@@ -1,0 +1,78 @@
+{
+  "info": {
+    "name": "MS-Notificacoes",
+    "description": "Collection para microsserviço de notificações",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Enviar E-mail",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"usuario@exemplo.com\",\n  \"subject\": \"Confirmação de Reserva\",\n  \"body\": \"Sua reserva foi confirmada para o dia 15/01/2024 às 09:00.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/notify/email",
+          "host": ["{{base_url}}"],
+          "path": ["notify", "email"]
+        }
+      }
+    },
+    {
+      "name": "Enviar SMS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phone\": \"+5511999999999\",\n  \"message\": \"Lembrete: Sua reserva é hoje às 09:00. CoworkFlow\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/notify/sms",
+          "host": ["{{base_url}}"],
+          "path": ["notify", "sms"]
+        }
+      }
+    },
+    {
+      "name": "Enviar Push Notification",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 1,\n  \"title\": \"Check-in Disponível\",\n  \"message\": \"Você já pode fazer check-in na sua reserva.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/notify/push",
+          "host": ["{{base_url}}"],
+          "path": ["notify", "push"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5007"
+    }
+  ]
+}

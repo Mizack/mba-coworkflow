@@ -1,0 +1,127 @@
+services:
+  # Bancos de dados
+  db-usuarios:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: usuarios
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_usuarios:/var/lib/postgresql/data
+
+  db-espacos:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: espacos
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_espacos:/var/lib/postgresql/data
+
+  db-reservas:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: reservas
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_reservas:/var/lib/postgresql/data
+
+  db-pagamentos:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: pagamentos
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_pagamentos:/var/lib/postgresql/data
+
+  # Microsserviços
+  ms-usuarios:
+    build: ./ms-usuarios
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db-usuarios
+
+  ms-espacos:
+    build: ./ms-espacos
+    ports:
+      - "5002:5002"
+    depends_on:
+      - db-espacos
+
+  ms-reservas:
+    build: ./ms-reservas
+    ports:
+      - "5003:5003"
+    depends_on:
+      - db-reservas
+
+  ms-pagamentos:
+    build: ./ms-pagamentos
+    ports:
+      - "5004:5004"
+    depends_on:
+      - db-pagamentos
+
+  ms-precos:
+    build: ./ms-precos
+    ports:
+      - "5005:5005"
+
+  ms-checkin:
+    build: ./ms-checkin
+    ports:
+      - "5006:5006"
+    depends_on:
+      - ms-reservas
+
+  ms-notificacoes:
+    build: ./ms-notificacoes
+    ports:
+      - "5007:5007"
+
+  ms-financeiro:
+    build: ./ms-financeiro
+    ports:
+      - "5008:5008"
+
+  ms-analytics:
+    build: ./ms-analytics
+    ports:
+      - "5009:5009"
+
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - USE_DOCKER=true
+    depends_on:
+      - ms-usuarios
+      - ms-espacos
+      - ms-reservas
+      - ms-pagamentos
+      - ms-precos
+      - ms-checkin
+      - ms-notificacoes
+      - ms-financeiro
+      - ms-analytics
+
+  # Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - USE_DOCKER=true
+    depends_on:
+      - api-gateway
+
+volumes:
+  postgres_usuarios:
+  postgres_espacos:
+  postgres_reservas:
+  postgres_pagamentos:

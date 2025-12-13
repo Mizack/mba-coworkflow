@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "MS-Checkin",
+    "description": "Collection para microsserviço de checkin/checkout",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Fazer Check-in",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/checkin/1",
+          "host": ["{{base_url}}"],
+          "path": ["checkin", "1"]
+        }
+      }
+    },
+    {
+      "name": "Fazer Check-out",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/checkout/1",
+          "host": ["{{base_url}}"],
+          "path": ["checkout", "1"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5006"
+    }
+  ]
+}

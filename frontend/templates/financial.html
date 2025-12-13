@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Relatório Financeiro</h2>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Receitas</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Receita Mensal:</strong> R$ {{ revenue.monthly_revenue }}</p>
+                <p><strong>Receita Anual:</strong> R$ {{ revenue.yearly_revenue }}</p>
+                <p><strong>Taxa de Crescimento:</strong> {{ revenue.growth_rate }}%</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Despesas</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Despesas Mensais:</strong> R$ {{ expenses.monthly_expenses }}</p>
+                <p><strong>Custos Operacionais:</strong> R$ {{ expenses.operational_costs }}</p>
+                <p><strong>Custos de Manutenção:</strong> R$ {{ expenses.maintenance_costs }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Resumo</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Lucro Mensal:</strong> 
+                    R$ {{ "%.2f"|format(revenue.monthly_revenue - expenses.monthly_expenses) }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

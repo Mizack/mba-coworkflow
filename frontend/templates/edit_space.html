@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Editar Espaço</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" name="name" class="form-control" value="{{ space.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Descrição</label>
+                <textarea name="description" class="form-control" rows="3">{{ space.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Capacidade</label>
+                <input type="number" name="capacity" class="form-control" value="{{ space.capacity }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Preço por Hora (R$)</label>
+                <input type="number" name="price_per_hour" step="0.01" class="form-control" value="{{ space.price_per_hour }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="/spaces" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "MS-Reservas",
+    "description": "Collection para microsserviço de reservas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Criar Reserva",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 1,\n  \"space_id\": 1,\n  \"start_time\": \"2024-01-15T09:00:00\",\n  \"end_time\": \"2024-01-15T11:00:00\",\n  \"total_price\": 50.0\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/reservations",
+          "host": ["{{base_url}}"],
+          "path": ["reservations"]
+        }
+      }
+    },
+    {
+      "name": "Detalhes da Reserva",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/reservations/1",
+          "host": ["{{base_url}}"],
+          "path": ["reservations", "1"]
+        }
+      }
+    },
+    {
+      "name": "Reservas do Usuário",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/reservations/user/1",
+          "host": ["{{base_url}}"],
+          "path": ["reservations", "user", "1"]
+        }
+      }
+    },
+    {
+      "name": "Cancelar Reserva",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/reservations/1",
+          "host": ["{{base_url}}"],
+          "path": ["reservations", "1"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5003"
+    }
+  ]
+}

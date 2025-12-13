@@ -1,0 +1,37 @@
+{
+  "info": {
+    "name": "MS-Analytics",
+    "description": "Collection para microsserviço de analytics",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Dashboard Analytics",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/analytics/dashboard",
+          "host": ["{{base_url}}"],
+          "path": ["analytics", "dashboard"]
+        }
+      }
+    },
+    {
+      "name": "Relatório de Uso",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/analytics/usage",
+          "host": ["{{base_url}}"],
+          "path": ["analytics", "usage"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5009"
+    }
+  ]
+}

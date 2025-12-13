@@ -1,0 +1,75 @@
+{
+  "info": {
+    "name": "MS-Espacos",
+    "description": "Collection para microsserviço de espaços",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar Espaços",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/spaces",
+          "host": ["{{base_url}}"],
+          "path": ["spaces"]
+        }
+      }
+    },
+    {
+      "name": "Criar Espaço",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sala de Reunião A\",\n  \"description\": \"Sala equipada com projetor e ar condicionado\",\n  \"capacity\": 8,\n  \"price_per_hour\": 25.0\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/spaces",
+          "host": ["{{base_url}}"],
+          "path": ["spaces"]
+        }
+      }
+    },
+    {
+      "name": "Detalhes do Espaço",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/spaces/1",
+          "host": ["{{base_url}}"],
+          "path": ["spaces", "1"]
+        }
+      }
+    },
+    {
+      "name": "Verificar Disponibilidade",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/spaces/1/availability?date=2024-01-15",
+          "host": ["{{base_url}}"],
+          "path": ["spaces", "1", "availability"],
+          "query": [
+            {
+              "key": "date",
+              "value": "2024-01-15"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5002"
+    }
+  ]
+}

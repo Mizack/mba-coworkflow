@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Minhas Reservas</h2>
+
+<div class="row">
+    {% for reservation in reservations %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Reserva #{{ reservation.id }}</h5>
+                <p><strong>Espaço:</strong> {{ reservation.space_id }}</p>
+                <p><strong>Início:</strong> {{ reservation.start_time }}</p>
+                <p><strong>Fim:</strong> {{ reservation.end_time }}</p>
+                <p><strong>Status:</strong> 
+                    <span class="badge bg-{% if reservation.status == 'active' %}success{% else %}secondary{% endif %}">
+                        {{ reservation.status }}
+                    </span>
+                </p>
+                <p><strong>Valor:</strong> R$ {{ reservation.total_price }}</p>
+                
+                {% if reservation.status == 'active' %}
+                <div class="btn-group">
+                    <a href="/checkin/{{ reservation.id }}" class="btn btn-success btn-sm">Check-in</a>
+                    <a href="/checkout/{{ reservation.id }}" class="btn btn-warning btn-sm">Check-out</a>
+                    <a href="/cancel/{{ reservation.id }}" class="btn btn-danger btn-sm" 
+                       onclick="return confirm('Cancelar reserva?')">Cancelar</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not reservations %}
+<div class="alert alert-info">
+    Você não possui reservas. <a href="/spaces">Faça sua primeira reserva!</a>
+</div>
+{% endif %}
+{% endblock %}
