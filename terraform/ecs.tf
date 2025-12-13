@@ -107,7 +107,7 @@ resource "aws_ecs_task_definition" "main" {
   container_definitions = jsonencode([
     {
       name      = "${each.key}-container"
-      image     = "nginx:alpine" 
+      image     = "${aws_ecr_repository.services[each.key].repository_url}:${var.image_tag}"
       essential = true
       portMappings = [
         {

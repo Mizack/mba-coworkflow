@@ -18,3 +18,8 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "image_tag" {
+  description = "Tag usada para imagens Docker (ex: commit SHA ou 'latest')"
+  default     = "latest"
+}
