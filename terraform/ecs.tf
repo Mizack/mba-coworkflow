@@ -160,7 +160,7 @@ resource "aws_ecs_service" "main" {
   }
 
   # Ignorar mudanças na Task Definition (pois o CI/CD vai alterá-la externamente)
-  lifecycle {
-    ignore_changes = [task_definition]
-  }
+  # NOTE: removido `ignore_changes = [task_definition]` para permitir que Terraform
+  # atualize o serviço quando a `aws_ecs_task_definition` mudar. Isso permite que o
+  # CI (que executa `terraform apply -var image_tag=...`) atualize o serviço automaticamente.
 }
