@@ -1,0 +1,19 @@
+# Dependências para testes
+pytest==7.4.4
+pytest-cov==4.1.0
+pytest-html==4.1.1
+pytest-xdist==3.5.0
+requests==2.31.0
+flask==3.0.0
+
+# Testes de UI
+selenium==4.16.0
+webdriver-manager==4.0.1
+axe-selenium-python==2.1.6
+
+# Testes de performance
+locust==2.18.3
+
+# Utilitários
+faker==21.0.0
+factory-boy==3.3.0
