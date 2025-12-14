@@ -88,7 +88,21 @@ jobs:
         ECR_REPOSITORY: coworkflow/${{ matrix.service }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # Build da imagem baseada na pasta do serviço
+        echo "Building image for ${{ matrix.service }}..."
+        
+        # Verificar se o diretório existe
+        if [ ! -d "./${{ matrix.service }}" ]; then
+          echo "Error: Directory ./${{ matrix.service }} not found"
+          exit 1
+        fi
+        
+        # Verificar se o Dockerfile existe
+        if [ ! -f "./${{ matrix.service }}/Dockerfile" ]; then
+          echo "Error: Dockerfile not found in ./${{ matrix.service }}/"
+          exit 1
+        fi
+        
+        # Build da imagem
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./${{ matrix.service }}
         
         # Push da tag única (commit sha)
@@ -97,8 +111,20 @@ jobs:
         # Push da tag latest
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        
+        echo "Successfully built and pushed ${{ matrix.service }}"
 
     - name: Update ECS Service
       run: |
-        # Força o ECS a baixar a nova imagem (new deployment)
+        echo "Updating ECS service for ${{ matrix.service }}..."
+        
+        # Verificar se o serviço existe
+        if aws ecs describe-services --cluster coworkflow-cluster --services ${{ matrix.service }}-service --query 'services[0].serviceName' --output text | grep -q "None"; then
+          echo "Warning: Service ${{ matrix.service }}-service not found in cluster"
+          exit 0
+        fi
+        
+        # Forçar novo deployment
         aws ecs update-service --cluster coworkflow-cluster --service ${{ matrix.service }}-service --force-new-deployment
+        
+        echo "Successfully updated ${{ matrix.service }}-service"

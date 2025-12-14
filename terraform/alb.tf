@@ -38,7 +38,12 @@ resource "aws_lb_target_group" "frontend" {
   target_type = "ip" # Necessário para Fargate
 
   health_check {
-    path = "/"
+    path                = "/health"
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    matcher             = "200"
   }
 }
 
@@ -51,7 +56,12 @@ resource "aws_lb_target_group" "api_gateway" {
   target_type = "ip"
 
   health_check {
-    path = "/health" # Assumindo que existe endpoint de health
+    path                = "/health"
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    matcher             = "200"
   }
 }
 

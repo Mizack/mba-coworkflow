@@ -263,5 +263,9 @@ def delete_space(space_id):
     flash('Espaço removido com sucesso!')
     return redirect('/spaces')
 
+@app.route('/health')
+def health():
+    return jsonify({'status': 'healthy'})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)

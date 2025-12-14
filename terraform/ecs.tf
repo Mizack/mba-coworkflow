@@ -49,7 +49,7 @@ resource "aws_security_group" "ecs_tasks_sg" {
 # Lista de Serviços para Iteração
 locals {
   services = {
-    "frontend"        = { port = 80, target_group = aws_lb_target_group.frontend.arn }
+    "frontend"        = { port = 3000, target_group = aws_lb_target_group.frontend.arn }
     "api-gateway"     = { port = 8000, target_group = aws_lb_target_group.api_gateway.arn }
     "ms-usuarios"     = { port = 5000, target_group = null }
     "ms-espacos"      = { port = 5000, target_group = null }
@@ -124,10 +124,15 @@ resource "aws_ecs_task_definition" "main" {
         }
       }
       environment = [
-        # Injetamos o host do banco para todos (mesmo que alguns não usem)
+        # Variáveis do banco de dados
         { name = "DB_HOST", value = aws_db_instance.postgres.address },
+        { name = "DB_NAME", value = "coworkflow" },
         { name = "DB_USER", value = var.db_username },
-        { name = "DB_PASSWORD", value = var.db_password }
+        { name = "DB_PASSWORD", value = var.db_password },
+        { name = "DB_PORT", value = "5432" },
+        # Variáveis de ambiente da aplicação
+        { name = "FLASK_ENV", value = "production" },
+        { name = "FLASK_APP", value = "app.py" }
       ]
     }
   ])
