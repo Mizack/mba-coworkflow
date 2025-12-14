@@ -12,6 +12,36 @@ users_db = {}
 
 @app.route('/auth/signup', methods=['POST'])
 def signup():
+    """
+    Cadastro de usuário
+    ---
+    tags:
+      - Autenticação
+    parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          required:
+            - email
+            - password
+            - name
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            name:
+              type: string
+            role:
+              type: string
+              default: user
+    responses:
+      201:
+        description: Usuário criado com sucesso
+      400:
+        description: Usuário já existe
+    """
     data = request.json
     if data['email'] in users_db:
         return jsonify({'error': 'User already exists'}), 400
@@ -28,6 +58,37 @@ def signup():
 
 @app.route('/auth/login', methods=['POST'])
 def login():
+    """
+    Login de usuário
+    ---
+    tags:
+      - Autenticação
+    parameters:
+      - in: body
+        name: credentials
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+    responses:
+      200:
+        description: Login realizado com sucesso
+        schema:
+          type: object
+          properties:
+            token:
+              type: string
+            role:
+              type: string
+      401:
+        description: Credenciais inválidas
+    """
     data = request.json
     user = users_db.get(data['email'])
     if user and check_password_hash(user['password_hash'], data['password']):
@@ -41,6 +102,36 @@ def login():
 
 @app.route('/users/me', methods=['GET'])
 def get_user():
+    """
+    Obter dados do usuário logado
+    ---
+    tags:
+      - Usuários
+    parameters:
+      - in: header
+        name: Authorization
+        type: string
+        required: true
+        description: Bearer token
+    responses:
+      200:
+        description: Dados do usuário
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            email:
+              type: string
+            name:
+              type: string
+            role:
+              type: string
+      401:
+        description: Token inválido
+      404:
+        description: Usuário não encontrado
+    """
     token = request.headers.get('Authorization', '').replace('Bearer ', '')
     try:
         data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
@@ -53,6 +144,28 @@ def get_user():
 
 @app.route('/admin/users', methods=['GET'])
 def list_users():
+    """
+    Listar todos os usuários (Admin)
+    ---
+    tags:
+      - Admin
+    responses:
+      200:
+        description: Lista de usuários
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              email:
+                type: string
+              name:
+                type: string
+              role:
+                type: string
+    """
     return jsonify([{'id': u['id'], 'email': u['email'], 'name': u['name'], 'role': u['role']} for u in users_db.values()])
 
 if __name__ == '__main__':

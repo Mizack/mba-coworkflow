@@ -2,9 +2,40 @@ from flask import Flask, request, jsonify
 import requests
 import jwt
 import os
+from flasgger import Swagger
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key'
+
+# Configuração do Swagger
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": 'apispec',
+            "route": '/apispec.json',
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/apidocs/"
+}
+
+swagger_template = {
+    "swagger": "2.0",
+    "info": {
+        "title": "CoworkFlow API Gateway",
+        "description": "API Gateway para sistema de gestão de coworkings",
+        "version": "1.0.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "schemes": ["http"]
+}
+
+swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
 USE_DOCKER = os.getenv('USE_DOCKER', 'false').lower() == 'true'
 
