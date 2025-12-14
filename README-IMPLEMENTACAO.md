@@ -35,7 +35,7 @@ coworkflow/
 3. **Acessar a aplicação:**
    - Frontend: http://localhost:3000
    - API Gateway: http://localhost:8000
-   - Swagger dos microsserviços: http://localhost:500X/apidocs
+   - Swagger dos microsserviços: http://localhost:5001/apidocs
 
 ## Endpoints Principais
 
