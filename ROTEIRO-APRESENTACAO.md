@@ -11,6 +11,7 @@
 4. **Aspectos Técnicos e Qualidade** (3 min)
 5. **Deploy e DevOps** (2 min)
 
+
 ---
 
 ## 🎬 1. VISÃO GERAL DO PROJETO

@@ -7,6 +7,7 @@
 - Push em `main` e `develop`
 - Pull requests para `main`
 
+
 **Jobs:**
 1. **Lint** - Validação de código com flake8
 2. **Test** - Execução de testes unitários
